@@ -6,12 +6,15 @@ LABEL com.github.containers.toolbox="true" \
       maintainer="gabriel@montanola.com"
 
 COPY extra-packages /
-RUN pacman -Syu --needed --noconfirm - < extra-packages
-RUN rm /extra-packages
-
-RUN pacman -Scc --noconfirm
+RUN sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
+    && locale-gen \
+    && pacman -R mlocate --noconfirm \
+    && pacman -Syu --needed --noconfirm - < extra-packages \
+    && rm -rf /extra-packages \
+    && pacman -Scc --noconfirm \
+    && rm -rf /var/cache/pacman/pkg/*
 
 RUN   ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
-      ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \ 
+      ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/rpm-ostree

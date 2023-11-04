@@ -10,7 +10,6 @@ fzf
 github-cli
 jq
 lsd
-make
 plocate
 ripgrep
 wl-clipboard
