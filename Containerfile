@@ -3,7 +3,7 @@ FROM quay.io/toolbx-images/archlinux-toolbox:latest
 LABEL com.github.containers.toolbox="true" \
       usage="This image is meant to be used with the toolbox or distrobox command" \
       summary="A cloud-native terminal experience" \
-      maintainer="jorge.castro@gmail.com"
+      maintainer="gabriel@montanola.com"
 
 COPY extra-packages /
 RUN apk update && \
