@@ -6,9 +6,7 @@ LABEL com.github.containers.toolbox="true" \
       maintainer="gabriel@montanola.com"
 
 COPY extra-packages /
-RUN apk update && \
-    apk upgrade && \
-    grep -v '^#' /extra-packages | xargs apk add
+RUN pacman -Syu --needed --noconfirm - < extra-packages
 RUN rm /extra-packages
 
 RUN   ln -fs /bin/sh /usr/bin/sh && \
