@@ -9,6 +9,7 @@ ffmpeg
 fzf
 github-cli
 jq
+lazygit
 lsd
 neovim
 plocate
