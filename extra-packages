@@ -12,6 +12,7 @@ jq
 lazygit
 lsd
 neovim
+pgcli
 plocate
 ripgrep
 tealdeer
