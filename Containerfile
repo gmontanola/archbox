@@ -9,10 +9,7 @@ COPY extra-packages /
 RUN sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
     && locale-gen \
     && pacman -R mlocate --noconfirm \
-    && pacman -Syu --needed --noconfirm - < extra-packages \
-    && rm -rf /extra-packages \
-    && pacman -Scc --noconfirm \
-    && rm -rf /var/cache/pacman/pkg/*
+    && pacman -Syu --needed --noconfirm - < extra-packages 
 
 ARG AUR_USER=builduser
 ARG HELPER=yay
@@ -20,7 +17,10 @@ ADD scripts/add-aur.sh /root
 RUN bash /root/add-aur.sh "${AUR_USER}" "${HELPER}"
 
 COPY aur-packages /
-RUN aur-install $(<aur-packages)
+RUN aur-install $(<aur-packages) \
+    && rm -f aur-packages extra-packages \
+    && pacman -Scc --noconfirm \
+    && rm -rf /var/cache/pacman/pkg/* 
 
 RUN   ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
