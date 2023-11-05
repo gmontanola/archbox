@@ -14,6 +14,11 @@ RUN sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
     && pacman -Scc --noconfirm \
     && rm -rf /var/cache/pacman/pkg/*
 
+ARG AUR_USER=builduser
+ARG HELPER=yay
+ADD scripts/add-aur.sh /root
+RUN bash /root/add-aur.sh "${AUR_USER}" "${HELPER}"
+
 RUN   ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
