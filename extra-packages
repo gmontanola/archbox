@@ -1,6 +1,6 @@
 atuin
-btop
 bat
+btop
 chezmoi
 cosign
 eza
@@ -10,6 +10,7 @@ fzf
 github-cli
 jq
 lsd
+neovim
 plocate
 ripgrep
 wl-clipboard
