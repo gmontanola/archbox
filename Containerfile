@@ -19,6 +19,9 @@ ARG HELPER=yay
 ADD scripts/add-aur.sh /root
 RUN bash /root/add-aur.sh "${AUR_USER}" "${HELPER}"
 
+COPY aur-packages /
+RUN aur-install $(<aur-packages)
+
 RUN   ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/podman && \
