@@ -11,7 +11,9 @@ RUN sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
     && pacman-key --init \
     && pacman-key --populate archlinux \
     && pacman -R mlocate --noconfirm \
-    && pacman -Syu --needed --noconfirm - < extra-packages 
+    && pacman -Syu --needed --noconfirm - < extra-packages \
+    && pacman -Scc --noconfirm \
+    && rm -Rf /var/cache/pacman/pkg/*
 
 ARG AUR_USER=builduser
 ARG HELPER=yay
@@ -21,8 +23,9 @@ RUN bash /root/add-aur.sh "${AUR_USER}" "${HELPER}"
 COPY aur-packages /
 RUN aur-install $(<aur-packages) \
     && rm -f aur-packages extra-packages \
-    && pacman -Scc --noconfirm \
-    && rm -rf /var/cache/pacman/pkg/* 
+    && rm -rf /var/cache/pacman/pkg/* \
+    && rm -Rf .cache/yay/* \
+    && rm -Rf /var/cache/foreign-pkg/*
 
 RUN   ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/docker && \
       ln -fs /usr/bin/distrobox-host-exec /usr/local/bin/flatpak && \
