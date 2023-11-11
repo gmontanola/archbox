@@ -8,6 +8,8 @@ LABEL com.github.containers.toolbox="true" \
 COPY extra-packages /
 RUN sed -i '/en_US.UTF-8 UTF-8/s/^#//g' /etc/locale.gen \
     && locale-gen \
+    && pacman-key --init \
+    && pacman-key --populate archlinux \
     && pacman -R mlocate --noconfirm \
     && pacman -Syu --needed --noconfirm - < extra-packages 
 
